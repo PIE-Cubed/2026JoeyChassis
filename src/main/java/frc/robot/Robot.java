@@ -19,6 +19,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+
+  private Controls controls;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -27,6 +30,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    controls = new Controls();
   }
 
   /**
@@ -92,7 +97,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+      controls.getForwardPowerFwdPositive();
+      controls.getRotateCCWPositive();
+      controls.getStrafePowerLeftPositive();
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override
