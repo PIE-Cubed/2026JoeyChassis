@@ -19,6 +19,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  public static final int NEO_CURRENT_LIMIT     = 60;
+  public static final int NEO_550_CURRENT_LIMIT = 30;    
+  public static final int VORTEX_CURRENT_LIMIT  = 80;
 
   private Controls controls;
 
@@ -81,7 +84,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    wheelControl();
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
@@ -98,9 +103,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-      controls.getForwardPowerFwdPositive();
-      controls.getRotateCCWPositive();
-      controls.getStrafePowerLeftPositive();
+      
   }
 
   /** This function is called once when the robot is first started up. */
@@ -110,4 +113,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  private void wheelControl() {
+      controls.getForwardPowerFwdPositive();
+      controls.getRotateCCWPositive();
+      controls.getStrafePowerLeftPositive();
+  }
+
 }
