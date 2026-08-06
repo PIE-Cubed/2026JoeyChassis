@@ -24,6 +24,7 @@ public class Robot extends TimedRobot {
   public static final int VORTEX_CURRENT_LIMIT  = 80;
 
   private Controls controls;
+  //private Wheels wheelTest;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,7 +35,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    controls = new Controls();
+    controls  = new Controls();
+    //wheelTest = new Wheels(10, 11, false);
   }
 
   /**
@@ -103,7 +105,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-      
+    //  wheelTest.testRotatePID(45);
   }
 
   /** This function is called once when the robot is first started up. */

@@ -21,7 +21,7 @@ public class Controls {
         double   fwdPower;
 
         fwdPower = zorro.getLeftY();
-        System.out.println("Forward Power:" + fwdPower);
+        //System.out.println("Forward Power:" + fwdPower);
         return fwdPower;
     }
 
@@ -29,7 +29,7 @@ public class Controls {
         double   strafePower;
 
         strafePower = zorro.getLeftX();
-        System.out.println("Strafe Power:" + strafePower);
+        //System.out.println("Strafe Power:" + strafePower);
         return strafePower * -1;
     }
 
@@ -37,7 +37,7 @@ public class Controls {
         double   rotatePower;
 
         rotatePower = zorro.getRightX();
-        System.out.println("Rotate Power:" + rotatePower);
+        //System.out.println("Rotate Power:" + rotatePower);
         return rotatePower * -1;
     }
 }
