@@ -24,7 +24,9 @@ public class Robot extends TimedRobot {
   public static final int VORTEX_CURRENT_LIMIT  = 80;
 
   private Controls controls;
-  //private Wheels wheelTest;
+  private Drive    drive;
+  //private Wheel wheelTest;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -36,6 +38,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
 
     controls  = new Controls();
+    drive     = new Drive();
     //wheelTest = new Wheels(10, 11, false);
   }
 
@@ -117,9 +120,10 @@ public class Robot extends TimedRobot {
   public void simulationPeriodic() {}
 
   private void wheelControl() {
-      controls.getForwardPowerFwdPositive();
-      controls.getRotateCCWPositive();
-      controls.getStrafePowerLeftPositive();
+    double fwdPower    = controls.getForwardPowerFwdPositive();
+    double rotatePower = controls.getRotateCCWPositive();
+    double strafePower = controls.getStrafePowerLeftPositive();
+    drive.teleopDrive(fwdPower, strafePower, rotatePower);
   }
 
 }

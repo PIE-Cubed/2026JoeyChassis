@@ -15,13 +15,15 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.*;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 
 /** Add your docs here. */
-public class Wheels {
+public class Wheel {
     private SparkFlex driveMotor;
     private SparkFlexConfig driveMotorConfig;
     private RelativeEncoder driveEncoder;
@@ -62,10 +64,9 @@ public class Wheels {
     private final double ROTATE_I = 0.0;
     private final double ROTATE_D = 0.0;
 
-    //private final double ROTATE_PID_TOLERANCE = 0.0;
-
+    //private final double ROTATE_PID_TOLERANCE = 0.0
     
-    public Wheels(int driveID, int rotateID, boolean invertDriveMotor) {
+    public Wheel(int driveID, int rotateID, boolean invertDriveMotor) {
         driveMotor  = new SparkFlex(driveID, MotorType.kBrushless);
         driveMotorConfig = new SparkFlexConfig();
         driveMotorConfig.smartCurrentLimit(Robot.VORTEX_CURRENT_LIMIT);
@@ -86,6 +87,12 @@ public class Wheels {
 
         driveMotorConfig.apply(driveEncoderConfig);
 
+        driveMotor.configure(
+            driveMotorConfig,
+            ResetMode.kNoResetSafeParameters,
+            PersistMode.kPersistParameters
+        );
+
         rotateEncoder = rotateMotor.getAbsoluteEncoder();
         rotateEncoderConfig = new AbsoluteEncoderConfig();
         rotateEncoderConfig
@@ -97,11 +104,25 @@ public class Wheels {
         rotatePIDController.enableContinuousInput(0, 360);
         rotatePIDController.reset();
         //rotatePIDController.setTolerence(ROTATE_PID_TOLERANCE);
+        rotateMotor.configure(
+            rotateMotorConfig,
+            ResetMode.kNoResetSafeParameters,
+            PersistMode.kPersistParameters
+        );
     }
 
 
 
     public void setDesiredState(SwerveModuleState swerveModuleState) {
+
+        swerveModuleState.optimize(
+            new Rotation2d(
+                MathUtil.angleModulus(
+                    Units.degreesToRadians(rotateEncoder.getPosition())
+                )
+            )
+        );
+
         double currentAngleDegrees;
         double targetAngleDegrees;
 
@@ -113,12 +134,6 @@ public class Wheels {
 
         driveMotor.set(MathUtil.clamp(swerveModuleState.speedMetersPerSecond, -1.0, 1.0));
         rotateMotor.set(MathUtil.clamp(rotatePower, -1.0, 1.0));
-    }
-
-
-
-    public void setDriveMotorPower(double power) {
-    
     }
 
 
