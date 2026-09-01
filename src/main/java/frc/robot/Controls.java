@@ -40,4 +40,17 @@ public class Controls {
         //System.out.println("Rotate Power:" + rotatePower);
         return rotatePower * -1;
     }
+
+    //get D button, have to hold
+    public boolean getWheelLock() {
+        return zorro.getDButton();
+    }
+
+    public boolean getResetGyro(){
+        return zorro.getGButton();
+    }
+
+    public boolean getFieldDrive(){
+        return zorro.getBThreePosSwitch() != 1;
+    }
 }

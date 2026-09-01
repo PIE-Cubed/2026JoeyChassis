@@ -25,8 +25,16 @@ public class Robot extends TimedRobot {
 
   private Controls controls;
   private Drive    drive;
+
   //private Wheel wheelTest;
 
+  private enum DriveState {
+    TELEOP,
+    LOCK_WHEELS,
+  }
+
+  private DriveState driveState = DriveState.TELEOP;
+  
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -120,10 +128,34 @@ public class Robot extends TimedRobot {
   public void simulationPeriodic() {}
 
   private void wheelControl() {
+    //get input data
     double fwdPower    = controls.getForwardPowerFwdPositive();
     double rotatePower = controls.getRotateCCWPositive();
     double strafePower = controls.getStrafePowerLeftPositive();
-    drive.teleopDrive(fwdPower, strafePower, rotatePower);
+    boolean wheelLock  = controls.getWheelLock();
+    boolean resetGyro  = controls.getResetGyro();
+    boolean fieldDrive = controls.getFieldDrive();
+
+    //Determine state of drive
+    if (wheelLock == true) {
+      driveState = DriveState.LOCK_WHEELS;
+    }
+    else  {
+      driveState = DriveState.TELEOP;
+    }
+
+    //Check reset gyro in all states
+    if (resetGyro == true) {
+      drive.resetGyro();
+    }
+    
+    //Control wheel
+    if (driveState == DriveState.LOCK_WHEELS) {
+      drive.wheelLock();
+    }
+    else if (driveState == DriveState.TELEOP) {
+      drive.teleopDrive(fwdPower, strafePower, rotatePower, fieldDrive);
+    }
   }
 
 }
