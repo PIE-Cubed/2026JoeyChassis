@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -84,7 +85,7 @@ public class Drive {
             chassisSpeeds = new ChassisSpeeds(fwdPower, strafePower, rotatePower);
         }
         else {
-            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fwdPower, strafePower, rotatePower, getGyroYaw());
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fwdPower, strafePower, rotatePower, getRobotYaw());
         }
 
         swerveModuleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
@@ -125,11 +126,24 @@ public class Drive {
 
 
 
-    private Rotation2d getGyroYaw() {
+    public Rotation2d getRobotYaw() {
        Angle  angle = gyro.getYaw();
        Double angleRadians = angle.in(Radians);
        Rotation2d yawRotation = new Rotation2d(angleRadians);
        return yawRotation;
     }
 
+    public SwerveDriveKinematics getRobotKinematics() {
+        return kinematics;
+    }
+
+    public SwerveModulePosition[] getSwerveModulePositions() {
+        return new SwerveModulePosition[] {
+            frontLeft.getSwerveModulePositions(),
+            frontRight.getSwerveModulePositions(),
+            backLeft.getSwerveModulePositions(),
+            backRight.getSwerveModulePositions()
+        };
+    }
+    
 }

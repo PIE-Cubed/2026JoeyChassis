@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
 
   private Controls controls;
   private Drive    drive;
-
+  private Pose     pose;
   //private Wheel wheelTest;
 
   private enum DriveState {
@@ -47,6 +47,9 @@ public class Robot extends TimedRobot {
 
     controls  = new Controls();
     drive     = new Drive();
+    pose      = new Pose(drive.getRobotKinematics(),
+                         drive.getSwerveModulePositions(),
+                         drive.getRobotYaw());
     //wheelTest = new Wheels(10, 11, false);
   }
 
@@ -58,7 +61,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    poseControl();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -158,4 +163,7 @@ public class Robot extends TimedRobot {
     }
   }
 
+  public void poseControl() {
+    pose.updatePoseEstimator(drive.getRobotYaw(), drive.getSwerveModulePositions());
+  }
 }

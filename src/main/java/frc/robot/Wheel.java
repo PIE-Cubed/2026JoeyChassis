@@ -109,9 +109,11 @@ public class Wheel {
             ResetMode.kNoResetSafeParameters,
             PersistMode.kPersistParameters
         );
+
+        
     }
 
-
+     
 
     public void setDesiredState(SwerveModuleState swerveModuleState) {
 
@@ -134,6 +136,16 @@ public class Wheel {
 
         driveMotor.set(MathUtil.clamp(swerveModuleState.speedMetersPerSecond, -1.0, 1.0));
         rotateMotor.set(MathUtil.clamp(rotatePower, -1.0, 1.0));
+    }
+
+
+
+
+    public SwerveModulePosition getSwerveModulePositions() {
+        return new SwerveModulePosition(
+            driveEncoder.getPosition(),
+            new Rotation2d(MathUtil.angleModulus(Units.degreesToRadians(rotateEncoder.getPosition())))
+        );
     }
 
 
