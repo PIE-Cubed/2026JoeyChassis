@@ -21,7 +21,9 @@ public class Controls {
         double   fwdPower;
 
         fwdPower = zorro.getLeftY();
-        //System.out.println("Forward Power:" + fwdPower);
+
+        fwdPower = Math.pow(fwdPower, 3);
+         //System.out.println("Forward Power:" + fwdPower);
         return fwdPower;
     }
 
@@ -29,6 +31,8 @@ public class Controls {
         double   strafePower;
 
         strafePower = zorro.getLeftX();
+
+        strafePower = Math.pow(strafePower, 3);
         //System.out.println("Strafe Power:" + strafePower);
         return strafePower * -1;
     }
@@ -37,6 +41,9 @@ public class Controls {
         double   rotatePower;
 
         rotatePower = zorro.getRightX();
+
+        rotatePower = Math.pow(rotatePower, 3);
+
         //System.out.println("Rotate Power:" + rotatePower);
         return rotatePower * -1;
     }
@@ -46,11 +53,11 @@ public class Controls {
         return zorro.getDButton();
     }
 
-    public boolean getResetGyro(){
+    public boolean getResetGyro() {
         return zorro.getGButton();
     }
 
-    public boolean getFieldDrive(){
+    public boolean getFieldDrive() {
         return zorro.getBThreePosSwitch() != 1;
     }
 }
