@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,6 +28,8 @@ public class Robot extends TimedRobot {
   private Drive    drive;
   private Pose     pose;
   //private Wheel wheelTest;
+
+  private Field2d field2d;
 
   private enum DriveState {
     TELEOP,
@@ -51,6 +54,8 @@ public class Robot extends TimedRobot {
                          drive.getSwerveModulePositions(),
                          drive.getRobotYaw());
     //wheelTest = new Wheels(10, 11, false);
+
+    field2d = new Field2d();
   }
 
   /**
@@ -63,6 +68,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     poseControl();
+
+    field2d.setRobotPose(pose.getPose());
+    SmartDashboard.putData("Field", field2d);
   }
 
   /**

@@ -29,4 +29,8 @@ SwerveDrivePoseEstimator poseEstimator;
 
         poseEstimator.update(currentRotation, currentPosition);
     }
+
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
 }
