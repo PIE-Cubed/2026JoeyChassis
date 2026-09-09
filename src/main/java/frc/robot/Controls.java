@@ -38,7 +38,7 @@ public class Controls {
     }
 
     public double getRotateCCWPositive() {
-        double   rotatePower;
+        double   rotatePower; 
 
         rotatePower = zorro.getRightX();
 
