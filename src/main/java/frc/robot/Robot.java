@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.util.Logger;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -56,6 +57,8 @@ public class Robot extends TimedRobot {
     //wheelTest = new Wheels(10, 11, false);
 
     field2d = new Field2d();
+
+    Logger.setEnabled(true);
   }
 
   /**
@@ -70,7 +73,9 @@ public class Robot extends TimedRobot {
     poseControl();
 
     field2d.setRobotPose(pose.getPose());
-    SmartDashboard.putData("Field", field2d);
+    SmartDashboard.putData("RobotField2d", field2d);
+
+    Logger.logStruct("RobotPose2d", pose.getPose());
   }
 
   /**
