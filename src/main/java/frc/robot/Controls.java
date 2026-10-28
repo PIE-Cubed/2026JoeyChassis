@@ -10,8 +10,11 @@ public class Controls {
     private ZorroController zorro;
 
     public Controls() {
-
-        zorro = new ZorroController(0);
+        /* multiple
+         * line
+         * comment
+         */
+        zorro = new ZorroController(0); //  single line comment
     
     }
 
