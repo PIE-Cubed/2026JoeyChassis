@@ -25,9 +25,10 @@ public class Robot extends TimedRobot {
   public static final int NEO_550_CURRENT_LIMIT = 30;    
   public static final int VORTEX_CURRENT_LIMIT  = 80;
 
-  private Controls controls;
-  private Drive    drive;
-  private Pose     pose;
+  private Controls  controls;
+  private Drive     drive;
+  private Pose      pose;
+  private AprilTags aprilTags;
   //private Wheel wheelTest;
 
   private Field2d field2d;
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
     pose      = new Pose(drive.getRobotKinematics(),
                          drive.getSwerveModulePositions(),
                          drive.getRobotYaw());
+    aprilTags = new AprilTags();
     //wheelTest = new Wheels(10, 11, false);
 
     field2d = new Field2d();

@@ -58,7 +58,7 @@ public class Drive {
                                                backLeftWheelLocation,  backRightWheelLocation);
         
         //set up gyro
-        gyro = new Navx(GYRO_CAN_ID,100);
+        gyro = new Navx(GYRO_CAN_ID, 100);
         gyro.enable9DYaw(false);
         gyro.enableOptionalMessages(
             true,
